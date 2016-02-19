@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
+					   xmlns:s="library://ns.adobe.com/flex/spark"
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   xmlns:loaders="com.jahepi.taekwondo.loaders.*"
+					   width="1024" 
+					   height="768" 
+					   applicationComplete="this.onInit(event)" 
+					   xmlns:component="com.jahepi.taekwondo.component.*">
+	<fx:Style source="Taekwondo.css"/>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.jahepi.taekwondo.event.ConfigLoaderEvent;
+			import com.jahepi.taekwondo.loaders.Config;
+			import com.jahepi.taekwondo.loaders.ConfigLoader;
+			
+			private var config:Config;
+			
+			private function onInit(e:Event):void 
+			{	
+				this.config = new Config();
+				var configLoader:ConfigLoader = new ConfigLoader(this.config);
+				configLoader.addEventListener(ConfigLoaderEvent.ON_CONFIG_LOAD_COMPLETE, this.onLoadConfig);
+				configLoader.load();
+			}
+			
+			private function onLoadConfig(e:Event):void 
+			{
+				this.scoreBoard.init(this.config);
+			}
+		]]>
+	</fx:Script>
+	
+	<component:ScoreBoardComponent id="scoreBoard" />
+	
+</s:WindowedApplication>
